@@ -8,18 +8,18 @@ function Intro(props) {
         <IntroContainer>
             <ReactPlayer
             playing={true}
+            loop={true}
             width="100%"
             height="100%"
             volume={1}
             muted= {isMuted}
-            url="https://vimeo.com/332672699"
+            url="https://vimeo.com/370164526"
             className="videoIntro"
             />
             <div className="inforIntro">
-                <h1 className="headingIntro">Alder Barn | Ashwell | Hertfordshire</h1>
-                <p className="contentIntro">Alder Barn is very spacious holiday home full of character with exposed oak beams and double height lounge.</p>
-                <p className="contentIntro">Centrally located in the beautiful and historic Ashwell Village you are also within easy reach of both London and Cambridge via car and rail.</p>
-            </div>
+                <h1 className="headingIntro">Avengers Assemble - Clip from Avengers: Endgame</h1>
+                <p className="contentIntro">The climatic moment when all the Avengers assemble for the final fight against Thanos.</p>
+             </div>
             {
                 isMuted?(
                     <VscMute className="btnVolumn"
@@ -65,10 +65,10 @@ padding-top: 56%;
         transition: all 0.3s ease;
 
         @media screen and (max-width: 800px){
-            left:40px;
+            font-size:40px;
         }
         @media screen and (max-width: 600px){
-            left:24px;
+            font-size:24px;
         }
     }
     .contentIntro{

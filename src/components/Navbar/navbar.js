@@ -1,9 +1,11 @@
 import Nexfix from '../../assets/imgs/Netflix-logo-red-black-png.png';
 import {BsSearch} from 'react-icons/bs';
 import styled from 'styled-components';
+import {useScrolly} from '../hook';
 function Navbar(props) {
+    const [scrollY]= useScrolly();
     return (  
-        <Navigation>
+        <Navigation style={scrollY < 5 ? {backgroundColor:'transparent'}:{backgroundColor:'black'}}>
             <div className='navContainer'>
                 <div className='logo'>
                    <img src={Nexfix} alt=''/>
@@ -27,7 +29,7 @@ const Navigation = styled.div`
     transition: all 1s;
     z-index:10;
     .navContainer{
-        background-color: var(--color-background);
+        background-color: transparent;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -52,8 +54,8 @@ const Navigation = styled.div`
                 color: red;
             }
             .iconSearch{
-                height: 19px;
-                width:19px;
+                height: 20px;
+                width: 20px;
                 cursor: pointer;
                 padding-right: 4px;
                 transform: translateX(24px) translateY(8px);
@@ -61,7 +63,7 @@ const Navigation = styled.div`
             }
             input{
                 font-size: 14px;
-                border: none;
+                border: 1px solid #fff;
                 color: white;
                 outline: none;
                 width: 0;
@@ -70,6 +72,7 @@ const Navigation = styled.div`
                 opacity: 0;
                 backgroud: var(--color-background);
                 transition: width 0.5s;
+                
                 &:focus{
                     padding-left: 26px;
                     width:300px;
