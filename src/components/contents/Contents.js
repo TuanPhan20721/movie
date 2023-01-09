@@ -1,43 +1,69 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import {FaArrowAltCircleUp} from "react-icons/fa";
 import MoviesRow from "./MoviesRow";
-import { getNetflixOriginals } from "../store/actions";
-const movies = [
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/y85e9oCVtgXSt1HfP9ZLZvr6AWs.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/9PFonBhy4cQy7Jz20NpMygczOkv.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/dKjjVuPawiREBYjREb3U5SCtfrt.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/j1yqOSVVskSYpYreNT0VeD1S3Dq.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/jhdSPDlhswjN1r6O0pGP3ZvQgU8.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/v9gijQNMhZjGSglOh0nFpfFHhC0.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/yuY9mNG8EgYBwDZKH4RFJHRoAUp.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/jGmC7aMqoLU0ALRKHkz3pQVV1pg.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/oAT0oFl0GWeIjpo1WnF601GFpwm.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/1a48bfLQm57ByADdw05uRMoFCZc.jpg"
-    ];
+import * as Action from "../store/actions";
+import styled from "styled-components";
+import { animateScroll as scroll } from "react-scroll";
+import { useScrolly } from "../hook";
+const ScrollToTop = ()=>{
+    scroll.scrollToTop();
+}
 function Contents(props) {
     const dispatch = useDispatch();
-    const {NetflixOriginals} = useSelector(state=>state.infoMovies);
+    const [scrollY] = useScrolly();
+    const {NetflixOriginals,
+        TrendingMovies,
+    TopRatedMovies,
+    ActionMovies,
+    ComedyMovies,
+    HorrorMovies,
+    RomanceMovies,
+    Documentaties,
+    } = useSelector(state=>state.infoMovies);
     useEffect(()=>{
-        dispatch(getNetflixOriginals());
+        dispatch(Action.getNetflixOriginals());
+        dispatch(Action.getTopRatedMovies());
+        dispatch(Action.getActionMovies());
+        dispatch(Action.getComedyMovies());
+        dispatch(Action.getHorrorMovies());
+        dispatch(Action.getRomanceMovies());
+        dispatch(Action.getDocumentaries());
     },[dispatch]);
-
-    console.log(NetflixOriginals);
-
     return (  
     <div>
-        {/* <MoviesRow movies={NetflixOriginals} title="Netflix Originals" isNetflix={true}/> */}
-        <MoviesRow movies={movies} title="Netflix Originals" isNetflix={true}/>
-        <MoviesRow movies={movies} title="Trending Movies"/>
-        <MoviesRow movies={movies} title="Top Rated Movies"/>
-        <MoviesRow movies={movies} title="Action Movies"/>
-        <MoviesRow movies={movies} title="Comedy Movies"/>
-        <MoviesRow movies={movies} title="Horror Movies"/>
-        <MoviesRow movies={movies} title="Romance Movies"/>
-        <MoviesRow movies={movies} title="Documentaries"/>
+        <MoviesRow movies={NetflixOriginals} title="Netflix Originals" isNetflix={true}/>
+        <MoviesRow movies={TrendingMovies} title="Trending Movies"/>
+        <MoviesRow movies={TopRatedMovies} title="Top Rated Movies"/>
+        <MoviesRow movies={ActionMovies} title="Action Movies"/>
+        <MoviesRow movies={ComedyMovies} title="Comedy Movies"/>
+        <MoviesRow movies={HorrorMovies} title="Horror Movies"/>
+        <MoviesRow movies={RomanceMovies} title="Romance Movies"/>
+        <MoviesRow movies={Documentaties} title="Documentaries"/>
+        <GoToTop   onClick={()=>ScrollToTop()}style = {{
+                visibility: `${scrollY > 600 ? 'visible': 'hidden'}`
+            }}>
+            <FaArrowAltCircleUp/>
+        </GoToTop>
     </div>
     );
 }
 
 export default Contents;
+const GoToTop = styled.div`
+position: fixed;
+z-index: 10;
+right: 70px;
+font-size: xx-large;
+bottom: 50px;
+color: rgba(255,255,255,0.4);
+transition: all 0.3s linear;
+
+&:hover{
+    color: rgba(255,255,255,0.8);
+}
+@media screen and (max-width:600px){
+    right:40px;
+}
+`

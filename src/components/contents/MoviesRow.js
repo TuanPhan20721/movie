@@ -65,17 +65,9 @@ function MoviesRow(props) {
                         })` 
                     }:{}
                 }
-                >
-                {
-                    movies.map((movie, index)=>(
-                    <div key={index} className="movieItem" ref= {movieRef} draggable='false'>
-                        <img src={movie} alt="" draggable='false'/>
-                        <div className="movieName">Movie Name</div>
-                    </div>
-                    ))
-                }
-                 {/* {
-                   movies && movies.length > 0 && movies.map((movie, index)=>{
+                > 
+                {/* eslint-disable-next-line */}
+                 {movies && movies.length > 0 && movies.map((movie, index)=>{
                        if(movie.poster_path && movie.backdrop_path !== null){
                             let imageUrl = isNetflix
                             ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
@@ -85,8 +77,9 @@ function MoviesRow(props) {
                                     <img src={imageUrl} alt="" draggable='false'/>
                                     <div className="movieName">{movie.title || movie.name}</div>
                                 </div>
-                                )}
-                         })} */}
+                                )
+                            }
+                         })}
             </MoviesSlider>
             <div className={`btnLeft ${isNetflix && 'isNetflix'}`} onClick={handleScrollLeft}>
                 <FiChevronLeft/>
