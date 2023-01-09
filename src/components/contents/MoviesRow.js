@@ -17,7 +17,7 @@ function MoviesRow(props) {
         if(sliderRef.current.scrollLeft < maxScrollLeft){
             SmoothHorizontalScrolling(sliderRef.current,
                 50,
-                movieRef.current.clientWidth,
+                movieRef.current.clientWidth *2,
                 sliderRef.current.scrollLeft )
         };
     }
@@ -25,7 +25,7 @@ function MoviesRow(props) {
         if(sliderRef.current.scrollLeft > 0){
             SmoothHorizontalScrolling(sliderRef.current,
                 50,
-                -movieRef.current.clientWidth,
+                -movieRef.current.clientWidth*2,
                 sliderRef.current.scrollLeft)
         };
     }
@@ -55,13 +55,14 @@ function MoviesRow(props) {
             onDragStart={onDragStart}
             onDragEnd = {onDragEnd}
             onDragEnter = {onDragEnter}
-                styled={
-                    movies && movies.length > 0 ? {
+                style={
+                    movies && movies.length > 0 
+                    ? {
                        gridTemplateColumns: `repeat(${movies.length},
-                        ${windowWidth > 1200 ? '360px'
-                        : windowWidth > 992 ? '300px'
-                        : windowWidth > 768 ? '250px':'200px'
-                    })` 
+                        ${windowWidth > 1200 ? '250px'
+                        : windowWidth > 992 ? '180px'
+                        : windowWidth > 768 ? '100px':'100px'
+                        })` 
                     }:{}
                 }
                 >
@@ -73,6 +74,19 @@ function MoviesRow(props) {
                     </div>
                     ))
                 }
+                 {/* {
+                   movies && movies.length > 0 && movies.map((movie, index)=>{
+                       if(movie.poster_path && movie.backdrop_path !== null){
+                            let imageUrl = isNetflix
+                            ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                            : `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`
+                            return (
+                                <div key={index} className="movieItem" ref= {movieRef} draggable='false'>
+                                    <img src={imageUrl} alt="" draggable='false'/>
+                                    <div className="movieName">{movie.title || movie.name}</div>
+                                </div>
+                                )}
+                         })} */}
             </MoviesSlider>
             <div className={`btnLeft ${isNetflix && 'isNetflix'}`} onClick={handleScrollLeft}>
                 <FiChevronLeft/>
@@ -81,7 +95,7 @@ function MoviesRow(props) {
                 <FiChevronRight/>
             </div>
         </MovieRowContener>
-     );
+     )
 }
 
 export default MoviesRow;
@@ -94,6 +108,7 @@ const MovieRowContener = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
+
     .heading{
         font-size: 18px;
         user-select: none;
@@ -163,7 +178,7 @@ const MovieRowContener = styled.div`
 `;
 const MoviesSlider = styled.div`
     display: grid;
-    gap:10px;
+    gap:6px;
     transition: all 0.3s linear;
     user-select: none;
     overflow-y: hidden;
@@ -179,8 +194,8 @@ const MoviesSlider = styled.div`
 
     .movieItem{
         transform: scale(1);
-        max-width:220px;
-        max-height:300px;
+        max-width:260px;
+        max-height:360px;
         width:100%;
         height:100%;
         transition: all 0.3s linear;
@@ -195,9 +210,9 @@ const MoviesSlider = styled.div`
             z-index:10;
         }
         img{
-            //width: 100%;
-            //height:100%;
-            //object-fit: cover;
+            width: 100%;
+            height:100%;
+            object-fit: cover;
         }
         .movieName{
             position: absolute;

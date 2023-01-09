@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import MoviesRow from "./MoviesRow";
+import { getNetflixOriginals } from "../store/actions";
 const movies = [
     "https://www.themoviedb.org/t/p/w220_and_h330_face/y85e9oCVtgXSt1HfP9ZLZvr6AWs.jpg",
     "https://www.themoviedb.org/t/p/w220_and_h330_face/9PFonBhy4cQy7Jz20NpMygczOkv.jpg",
@@ -14,8 +17,17 @@ const movies = [
     "https://www.themoviedb.org/t/p/w220_and_h330_face/1a48bfLQm57ByADdw05uRMoFCZc.jpg"
     ];
 function Contents(props) {
+    const dispatch = useDispatch();
+    const {NetflixOriginals} = useSelector(state=>state.infoMovies);
+    useEffect(()=>{
+        dispatch(getNetflixOriginals());
+    },[dispatch]);
+
+    console.log(NetflixOriginals);
+
     return (  
     <div>
+        {/* <MoviesRow movies={NetflixOriginals} title="Netflix Originals" isNetflix={true}/> */}
         <MoviesRow movies={movies} title="Netflix Originals" isNetflix={true}/>
         <MoviesRow movies={movies} title="Trending Movies"/>
         <MoviesRow movies={movies} title="Top Rated Movies"/>
