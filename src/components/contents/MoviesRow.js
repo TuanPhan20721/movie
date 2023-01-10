@@ -3,6 +3,8 @@ import {FiChevronLeft,FiChevronRight} from 'react-icons/fi';
 import { useEffect, useRef, useState } from "react";
 import {SmoothHorizontalScrolling} from '../../utils';
 import { useViewport } from "../hook";
+import { useDispatch } from "react-redux";
+import { setMovieDetail } from "../store/actions";
 
 function MoviesRow(props) {
     const {movies, title,isNetflix} = props;
@@ -12,6 +14,12 @@ function MoviesRow(props) {
     const [dragMove,setDragMove]=useState(0);
     const [isDrag,setIsDrag] = useState(false);
     const [windowWidth] = useViewport();
+
+    const dispatch = useDispatch();
+
+    const handleSetMovie = (movie) => {
+        dispatch(setMovieDetail(movie))
+    }
     const handleScrollRight = () => {
         const maxScrollLeft = sliderRef.current.scrollWidth - sliderRef.current.clientWidth;
         if(sliderRef.current.scrollLeft < maxScrollLeft){
@@ -73,7 +81,12 @@ function MoviesRow(props) {
                             ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
                             : `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`
                             return (
-                                <div key={index} className="movieItem" ref= {movieRef} draggable='false'>
+                                <div key={index}
+                                className="movieItem" 
+                                ref= {movieRef} 
+                                draggable='false'
+                                coClick={()=>handleSetMovie(movie)}
+                                >
                                     <img src={imageUrl} alt="" draggable='false'/>
                                     <div className="movieName">{movie.title || movie.name}</div>
                                 </div>

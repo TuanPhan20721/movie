@@ -15,15 +15,16 @@ function Contents(props) {
     const [scrollY] = useScrolly();
     const {NetflixOriginals,
         TrendingMovies,
-    TopRatedMovies,
-    ActionMovies,
-    ComedyMovies,
-    HorrorMovies,
-    RomanceMovies,
-    Documentaties,
+        TopRatedMovies,
+        ActionMovies,
+        ComedyMovies,
+        HorrorMovies,
+        RomanceMovies,
+        Documentaties,
     } = useSelector(state=>state.infoMovies);
     useEffect(()=>{
         dispatch(Action.getNetflixOriginals());
+        dispatch(Action.getTrendingMovies());
         dispatch(Action.getTopRatedMovies());
         dispatch(Action.getActionMovies());
         dispatch(Action.getComedyMovies());
