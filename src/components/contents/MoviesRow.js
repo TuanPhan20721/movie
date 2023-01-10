@@ -85,7 +85,7 @@ function MoviesRow(props) {
                                 className="movieItem" 
                                 ref= {movieRef} 
                                 draggable='false'
-                                coClick={()=>handleSetMovie(movie)}
+                                onClick={()=>handleSetMovie(movie)}
                                 >
                                     <img src={imageUrl} alt="" draggable='false'/>
                                     <div className="movieName">{movie.title || movie.name}</div>

@@ -2,17 +2,37 @@ import Nexfix from '../../assets/imgs/Netflix-logo-red-black-png.png';
 import {BsSearch} from 'react-icons/bs';
 import styled from 'styled-components';
 import {useScrolly} from '../hook';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function Navbar(props) {
     const [scrollY]= useScrolly();
+    const [keywords,setKeywords] = useState('');
+    const navigate = useNavigate();
+
+    const handleChangeInput = (e) =>{
+        let keywords = e.target.value;
+        setKeywords(keywords);
+        (keywords.length > 0) ?
+            navigate(`/search?keywords=${keywords.trim()}`)
+        : navigate('/')
+    }
+    const goHome = ()=>{
+        navigate('/');
+        setKeywords('');
+    }
     return (  
         <Navigation style={scrollY < 5 ? {backgroundColor:'transparent'}:{backgroundColor:'black'}}>
             <div className='navContainer'>
-                <div className='logo'>
+                <div className='logo' onClick={goHome}>
                    <img src={Nexfix} alt=''/>
                 </div>
                 <div className='navSearch'>
                     <BsSearch className='iconSearch'/>
-                    <input type="text" placeholder='input title'/>
+                    <input type="text" 
+                    placeholder='input title'
+                    onChange={handleChangeInput}
+                    value={keywords}                     
+                    />
                 </div>
             </div>
         </Navigation>
