@@ -84,7 +84,7 @@ const Navigation = styled.div`
             input{
                 font-size: 14px;
                 border: 1px solid #fff;
-                color: white;
+                color: black;
                 outline: none;
                 width: 0;
                 padding: 10px;
